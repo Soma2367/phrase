@@ -18,12 +18,13 @@
                                 <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">新規フォルダ作成</h1>
                                 <p class="lg:w-2/3 mx-auto leading-relaxed text-base">フォルダ名を入力してください</p>
                             </div>
-                            <div class="lg:w-1/2 md:w-2/3 mx-auto">
-                                <div class="flex flex-wrap -m-2 justify-center"> 
-                                        <div class="p-2">
-                                            <label for="name" class="leading-7 text-sm text-gray-600">フォルダ名</label>
-                                            <input type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
+                            <div class="flex flex-wrap -m-2 justify-center"> 
+                                <div class="p-2">
+                                    <label for="name" class="leading-7 text-sm text-gray-600">フォルダ名</label>
+                                    <input type="text" id="name" name="name" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @error('name')
+                                        <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
 

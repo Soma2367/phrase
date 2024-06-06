@@ -44,4 +44,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    //各ユーザーのログインによって、そのユーザー専用のフォルダとカードを表示する
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
+    }
 }

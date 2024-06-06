@@ -1,7 +1,7 @@
 <x-app-layout class="relative">
     <x-slot name="header">
         <div class="flex items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Folder</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">PHRASE</h2>
         </div>
     </x-slot>
 

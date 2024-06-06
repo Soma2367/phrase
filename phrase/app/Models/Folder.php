@@ -9,10 +9,18 @@ class Folder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['folder_name'];
+    protected $fillable = [
+        'folder_name',
+        'user_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function cards()
     {
-        return $this->hasMany(Cards::class);
+        return $this->hasMany(Card::class);
     }
 }
