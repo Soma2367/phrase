@@ -7,7 +7,7 @@
                 </svg>
             </a>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                File
+                {{$folder_name}}
             </h2>
         </div>
     </x-slot>

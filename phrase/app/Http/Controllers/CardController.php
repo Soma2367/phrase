@@ -46,8 +46,9 @@ class CardController extends Controller
     public function show(Request $request, $folder_id)
     {
         $folder = Folder::findOrFail($folder_id);
+        $folder_name = $folder->folder_name;
         $cards = Card::where('folder_id', $folder_id)->get();
-        return view('card.show', compact('cards', 'folder'));
+        return view('card.show', compact('cards', 'folder', 'folder_name'));
     }
 
     /**
