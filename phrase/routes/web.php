@@ -7,7 +7,7 @@ use App\Http\Controllers\PhraseUserController;
 use App\Http\Controllers\CardController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // folder

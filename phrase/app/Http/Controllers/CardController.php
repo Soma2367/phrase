@@ -13,7 +13,7 @@ class CardController extends Controller
      */
     public function index()
     {
-        // eat
+        
     }
 
     /**
