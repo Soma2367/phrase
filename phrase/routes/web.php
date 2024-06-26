@@ -34,6 +34,7 @@ Route::prefix('card')->middleware(['auth'])
             Route::get('/{folder_id}/edit', 'edit')->name('edit');
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::get('{folder_id}/search', 'search')->name('search');
         });
 
 //認証ルーティング

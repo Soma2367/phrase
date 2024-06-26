@@ -88,4 +88,20 @@ class CardController extends Controller
 
         return redirect()->route('card.show', ['folder_id' => $folder_id]);
     }
+
+    public function search(Request $request, $folder_id)
+    {
+        $folder = Folder::findOrFail($folder_id);
+        $folder_name = $folder->folder_name;
+        
+        $query = $request->input('query');
+        $cards = Card::where('folder_id', $folder_id)
+                    ->where(function ($queryBuilder) use ($query) {
+                        $queryBuilder->where('front_text', 'like', '%'.$query.'%')
+                                    ->orWhere('back_text', 'like', '%'.$query.'%');
+                    })
+                    ->get();
+
+        return view('card.show', compact('cards', 'folder', 'folder_name'));
+    }
 }
