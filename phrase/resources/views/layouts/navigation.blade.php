@@ -19,7 +19,11 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('folder.index')" :active="request()->routeIs('folder.index')">
-                        phrase
+                        Phrase
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('book.bookmarks.index')" :active="request()->routeIs('book.bookmarks.index')">
+                        BookMarks
                     </x-nav-link>
                 </div>
             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Card;
 use App\Models\Folder;
+use App\Models\Bookmark;
 
 class CardController extends Controller
 {
@@ -91,10 +92,15 @@ class CardController extends Controller
 
     public function search(Request $request, $folder_id)
     {
+        $request->validate([
+            'query' => 'required', 
+        ]);
+
         $folder = Folder::findOrFail($folder_id);
         $folder_name = $folder->folder_name;
         
         $query = $request->input('query');
+      
         $cards = Card::where('folder_id', $folder_id)
                     ->where(function ($queryBuilder) use ($query) {
                         $queryBuilder->where('front_text', 'like', '%'.$query.'%')

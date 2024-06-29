@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\PhraseUserController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\BookmarkController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -35,6 +36,15 @@ Route::prefix('card')->middleware(['auth'])
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
             Route::get('{folder_id}/search', 'search')->name('search');
+        });
+
+Route::prefix('book')
+        ->controller(BookmarkController::class)
+        ->name('book.')
+        ->group(function(){
+            Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+            Route::post('/bookmarks/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
+            Route::get('/bookmarks/check/{card_id}', [BookmarkController::class, 'checkBookmarkStatus'])->name('bookmarks.check');
         });
 
 //認証ルーティング

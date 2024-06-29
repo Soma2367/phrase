@@ -7,15 +7,15 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            @foreach($folders as $folder)
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg cursor-pointer" onclick="window.location='{{ route('folder.show', ['id' => $folder->id]) }}'">
-                    <div class="p-5 text-gray-900 flex justify-center items-center"> <!-- ここを修正 -->
-                        <div class="text-lg font-semibold">{{ $folder->folder_name }}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                @foreach($folders as $folder)
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg cursor-pointer border border-blue-500 border-opacity-50" onclick="window.location='{{ route('folder.show', ['id' => $folder->id]) }}'">
+                        <div class="p-5 text-gray-900 flex justify-center items-center"> <!-- ここを修正 -->
+                            <div class="text-lg font-semibold">{{ $folder->folder_name }}</div>
+                        </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
             <div class="absolute bottom-7 right-7 p-4">
                 <a href="{{ route('folder.create') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10 stroke-1 hover:stroke-2 stroke-cyan-700 transition-transform transform hover:scale-125">
@@ -26,4 +26,3 @@
         </div>
     </div>
 </x-app-layout>
-
