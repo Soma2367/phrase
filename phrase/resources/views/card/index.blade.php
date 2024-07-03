@@ -1,34 +1,36 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                <a href="{{ route('card.show', ['folder_id' => $folder->id]) }}" class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
-            </a>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ $folder_name }}
-                </h2>
-            </div>
-            <div class="flex items-center">
-                <form action="{{ route('card.search', ['folder_id' => $folder->id]) }}" method="GET" class="max-w-full mx-auto">
-                    <label for="default-search" class="sr-only">Search</label>
-                    <div class="relative flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white dark:bg-gray-700">
-                        <input type="search" id="default-search" name="query" value="{{ old('query') }}" class="block w-full py-3 px-4 sm:px-6 text-sm text-gray-900 border-0 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="キーワード" required>
-                        <button type="submit" class="text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 cyan-700">
-                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
+    <div class="flex items-center justify-between">
+            <div class="flex items-center w-full">
+                <div class="flex items-center justify-start w-1/2">
+                    <a href="{{ route('card.show', ['folder_id' => $folder->id]) }}" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+                    </a>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        {{ $folder_name }}
+                    </h2>
+                </div>
+                <div class="flex items-center justify-end w-1/2">
+                    <form action="{{ route('card.search', ['folder_id' => $folder->id]) }}" method="GET" class="w-full max-w-md">
+                        <label for="default-search" class="sr-only">Search</label>
+                        <div class="relative flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white dark:bg-gray-700">
+                            <input type="search" id="default-search" name="query" value="{{ old('query') }}" class="block w-full py-3 px-4 sm:px-6 text-sm text-gray-900 border-0 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="キーワード" required>
+                            <button type="submit" class="text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 cyan-700">
+                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(request('query'))
                 @if($cards->isEmpty())
                     <p class="text-center text-gray-500">「{{ request('query') }}」に一致するカードは見つかりませんでした。</p>
@@ -36,13 +38,18 @@
             @endif
 
             @foreach($cards as $card)
-                <div class="flip-card w-full h-40 m-2" onclick="flipCard(this)">
+                <div class="flip-card w-full h-40 m-8" onclick="flipCard(this)">
                     <div class="flip-card-inner w-full h-full relative">
                         <div class="flip-card-front bg-white border border-gray-300 rounded p-4 flex justify-center items-center relative">
                             {{ $card->front_text }}
                             <div class="absolute top-2 right-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bookmark-icon size-6" data-card-id="{{ $card->id }}" style="cursor: pointer;">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                                </svg>
+                            </div>
+                            <div class="absolute bottom-2 left-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 sound-icon" style="cursor: pointer;" data-text="{{ $card->front_text }}">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
                                 </svg>
                             </div>
                         </div>
@@ -83,49 +90,64 @@
     </div>
 
     <script>
-        function flipCard(card) {
-           card.classList.toggle('flipped');
-        }
+    function flipCard(card) {
+        card.classList.toggle('flipped');
+    }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const bookmarkIcons = document.querySelectorAll('.bookmark-icon');
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookmarkIcons = document.querySelectorAll('.bookmark-icon');
+        bookmarkIcons.forEach(icon => {
+            const cardId = icon.dataset.cardId;
 
-            bookmarkIcons.forEach(icon => {
-                const cardId = icon.dataset.cardId;
+            fetch(`{{ route('book.bookmarks.check', ['card_id' => ':card_id']) }}`.replace(':card_id', cardId))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.bookmarked) {
+                        icon.querySelector('path').setAttribute('fill', 'currentColor');
+                    } else {
+                        icon.querySelector('path').setAttribute('fill', 'none');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
 
-                fetch(`{{ route('book.bookmarks.check', ['card_id' => ':card_id']) }}`.replace(':card_id', cardId))
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.bookmarked) {
-                            icon.querySelector('path').setAttribute('fill', 'currentColor');
-                        } else {
-                            icon.querySelector('path').setAttribute('fill', 'none');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation();
 
-                icon.addEventListener('click', function(e) {
-                    e.stopPropagation();
-
-                    fetch('{{ route('book.bookmarks.toggle') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ card_id: cardId })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.bookmarked) {
-                            icon.querySelector('path').setAttribute('fill', 'currentColor');
-                        } else {
-                            icon.querySelector('path').setAttribute('fill', 'none');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-                });
+                fetch('{{ route('book.bookmarks.toggle') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ card_id: cardId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.bookmarked) {
+                        icon.querySelector('path').setAttribute('fill', 'currentColor');
+                    } else {
+                        icon.querySelector('path').setAttribute('fill', 'none');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
             });
         });
-    </script>
+
+        const soundIcons = document.querySelectorAll('.sound-icon');
+        soundIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const textToSpeak = icon.dataset.text;
+            if ('speechSynthesis' in window) {
+                const voice = new SpeechSynthesisUtterance(textToSpeak);
+                voice.lang = 'en-US';
+                speechSynthesis.speak(voice);
+            } else {
+                console.error('Web Speech API is not supported in this browser.');
+            }
+        });
+    });
+    });
+</script>
+
 </x-app-layout>

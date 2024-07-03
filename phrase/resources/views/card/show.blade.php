@@ -1,34 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                <a href="{{ route('folder.index') }}" class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                    </svg>
-                </a>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ $folder_name }}
-                </h2>
-            </div>
-            <div class="flex items-center">
-            <form action="{{ route('card.search', ['folder_id' => $folder->id]) }}" method="GET" class="max-w-full mx-auto">
-                    <label for="default-search" class="sr-only">Search</label>
-                    <div class="relative flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white dark:bg-gray-700">
-                        <input type="search" id="default-search" name="query" value="{{ old('query') }}" class="block w-full py-3 px-4 sm:px-6 text-sm text-gray-900 border-0 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="キーワード" required>
-                        <button type="submit" class="text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 cyan-700">
-                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </form>
+            <div class="flex items-center w-full">
+                <div class="flex items-center justify-start w-1/2">
+                    <a href="{{ route('folder.index') }}" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+                    </a>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        {{ $folder_name }}
+                    </h2>
+                </div>
+                <div class="flex items-center justify-end w-1/2">
+                    <form action="{{ route('card.search', ['folder_id' => $folder->id]) }}" method="GET" class="w-full max-w-md">
+                        <label for="default-search" class="sr-only">Search</label>
+                        <div class="relative flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white dark:bg-gray-700">
+                            <input type="search" id="default-search" name="query" value="{{ old('query') }}" class="block w-full py-3 px-4 sm:px-6 text-sm text-gray-900 border-0 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="キーワード" required>
+                            <button type="submit" class="text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 cyan-700">
+                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </x-slot>
 
+
     <div class="py-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(request('query'))
                 @if($cards->isEmpty())
                     <p class="text-center text-gray-500">「{{ request('query') }}」に一致するカードは見つかりませんでした。</p>
@@ -36,7 +39,7 @@
             @endif
 
             @foreach($cards as $card)
-                <div class="flip-card w-full h-40 m-2" onclick="flipCard(this)">
+                <div class="flip-card w-full h-40 m-8" onclick="flipCard(this)">
                     <div class="flip-card-inner w-full h-full relative">
                         <div class="flip-card-front bg-white border border-gray-300 rounded p-4 flex justify-center items-center relative">
                             {{ $card->front_text }}
@@ -135,12 +138,11 @@
         soundIcons.forEach(icon => {
         icon.addEventListener('click', function(e) {
             e.stopPropagation();
-
             const textToSpeak = icon.dataset.text;
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(textToSpeak);
-                utterance.lang = 'en-US';  // 読み上げる言語を設定（例：英語）
-                speechSynthesis.speak(utterance);
+                const voice = new SpeechSynthesisUtterance(textToSpeak);
+                voice.lang = 'en-US';
+                speechSynthesis.speak(voice);
             } else {
                 console.error('Web Speech API is not supported in this browser.');
             }
