@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('folder_id')->constrained()->onDelete('cascade');//リレーション、外部キー
-            $table->string('front_text');
-            $table->string('back_text');
+            $table->string('front_text', 700);
+            $table->string('back_text', 700);
             $table->timestamps();
         });
     }

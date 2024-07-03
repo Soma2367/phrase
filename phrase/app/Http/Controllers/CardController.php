@@ -12,9 +12,12 @@ class CardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($folder_id)
     {
-        
+        $folder = Folder::findOrFail($folder_id);
+        $folder_name = $folder->folder_name;
+        $cards = Card::where('folder_id', $folder_id)->get();
+        return view('card.index', compact('cards', 'folder', 'folder_name'));
     }
 
     /**
@@ -31,12 +34,25 @@ class CardController extends Controller
      */
     public function store(Request $request, $folder_id)
     {
+        $rules = [
+            'front_text' => 'required|string|max:400',
+            'back_text' => 'required|string|max:400',
+        ];
+
+        $messages = [
+            'front_text.max' => 'Front text must not exceed 700 characters.',
+            'back_text.max' => 'Back text must not exceed 700 characters.',
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
+
         $folder = Folder::findOrFail($folder_id);
-        $cards = new Card();
-        $cards->folder_id = $folder_id;
-        $cards->front_text = $request->input('front_text');
-        $cards->back_text = $request->input('back_text');
-        $cards->save();
+
+        $card = new Card();
+        $card->folder_id = $folder_id;
+        $card->front_text = $request->input('front_text');
+        $card->back_text = $request->input('back_text');
+        $card->save();
         
         return redirect()->route('card.show', ['folder_id' => $folder->id]);
     }
@@ -49,7 +65,8 @@ class CardController extends Controller
         $folder = Folder::findOrFail($folder_id);
         $folder_name = $folder->folder_name;
         $cards = Card::where('folder_id', $folder_id)->get();
-        return view('card.show', compact('cards', 'folder', 'folder_name'));
+        $query = null;
+        return view('card.show', compact('cards', 'folder', 'folder_name', 'query'));
     }
 
     /**
@@ -95,19 +112,18 @@ class CardController extends Controller
         $request->validate([
             'query' => 'required', 
         ]);
-
+    
         $folder = Folder::findOrFail($folder_id);
         $folder_name = $folder->folder_name;
-        
+    
         $query = $request->input('query');
-      
+    
         $cards = Card::where('folder_id', $folder_id)
                     ->where(function ($queryBuilder) use ($query) {
-                        $queryBuilder->where('front_text', 'like', '%'.$query.'%')
-                                    ->orWhere('back_text', 'like', '%'.$query.'%');
+                        $queryBuilder->where('front_text', 'like', '%'.$query.'%');
                     })
                     ->get();
-
-        return view('card.show', compact('cards', 'folder', 'folder_name'));
+    
+        return view('card.index', compact('cards', 'folder', 'folder_name', 'query'));
     }
 }

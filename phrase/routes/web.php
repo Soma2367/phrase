@@ -7,6 +7,7 @@ use App\Http\Controllers\PhraseUserController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\BookmarkController;
 
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -29,6 +30,7 @@ Route::prefix('card')->middleware(['auth'])
         ->controller(CardController::class)
         ->name('card.')
         ->group(function(){
+            Route::get('/', 'index')->name('index'); 
             Route::get('{folder_id}/create', 'create')->name('create');
             Route::post('{folder_id}', 'store')->name('store');
             Route::get('{folder_id}/show', 'show')->name('show');
@@ -46,6 +48,7 @@ Route::prefix('book')
             Route::post('/bookmarks/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
             Route::get('/bookmarks/check/{card_id}', [BookmarkController::class, 'checkBookmarkStatus'])->name('bookmarks.check');
         });
+
 
 //認証ルーティング
 Route::get('/dashboard', function () {

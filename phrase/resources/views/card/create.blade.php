@@ -17,11 +17,17 @@
                                     <div class="text-center pb-10">
                                         <h3 class="text-lg font-semibold pb-3">Front</h3>
                                         <textarea name="front_text" id="front_text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                                        @error('front_text')
+                                            <p class="text-red-700 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="text-center font-semibold pb-20">
                                         <h3 class="text-lg pb-3">Back</h3>
                                         <textarea name="back_text" id="back_text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                                        @error('back_text')
+                                            <p class="text-red-700 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="p-2 w-full">
