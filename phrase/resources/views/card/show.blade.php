@@ -79,16 +79,16 @@
                 </div>
             @endforeach
         </div>
+    </div>
 
-        <!-- plusボタン -->
-        <div class="absolute bottom-7 right-7 p-4">
+      <!-- plusボタン -->
+      <div class="fixed bottom-7 right-7 p-4">
             <a href="{{ route('card.create', ['folder_id' => $folder->id]) }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 stroke-1 hover:stroke-2 stroke-cyan-700 transition-transform transform hover:scale-125">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </a>
         </div>
-    </div>
 
     <script>
     function flipCard(card) {
